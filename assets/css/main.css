@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .estrela-vazia {
+    @apply text-lg text-gray-300 dark:text-gray-500;
+  }
+  .estrela-amarela {
+    @apply text-lg text-yellow-300;
+  }
+}
