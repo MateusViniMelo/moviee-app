@@ -1,36 +1,53 @@
 <template>
     <div>
-        <h1 class="text-2xl font-bold tracking-tight text-gray-900 uppercase dark:text-white">Filmes bem avaliados</h1>
-        <div class="grid grid-cols-1 gap-5 mt-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 xl:gap-10 ">
+        <h1 class="mb-3 text-2xl font-bold tracking-tight text-gray-900 uppercase dark:text-white">Filmes bem avaliados</h1>
 
+        <swiper :slidesPerView="slidesPorView" :freeMode="true" :navigation="true" :spaceBetween="20" :pagination="{
+            clickable: true,
+        }" :modules="[Navigation, FreeMode]" @resize="setSlidesPorTamanho()">
+            <swiper-slide v-for=" filme  in  filmeResponse?.results " :key="filme.id">
+                <img class="rounded-t-lg" :src="`${config.public.imageUrl}${filme?.poster_path}`"
+                    :alt="`${filme?.title}`" />
 
-            <MovieCard v-for="filme in filmeResponse?.results" :key="filme.id" :filme="filme" />
+            </swiper-slide>
 
+        </swiper>
 
-        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 
+import { FreeMode, Navigation  } from 'swiper/modules';
+
+import 'swiper/css';
+
+import 'swiper/css/pagination';
 
 
-
+const isClient = process.client;
 const filmeStore = useFilmeStore()
-
+const tamanhoSliderStore = useTamanhoSliderStore()
+const config = useRuntimeConfig();
 const { getGenresMovies } = useGenreMovie()
+
 const { filmeResponse } = storeToRefs(filmeStore)
+const { slidesPorView } = storeToRefs(tamanhoSliderStore)
 
 const { loadFilmesBemAvaliados } = filmeStore
+const { setSlidesPorTamanho } = tamanhoSliderStore
+
+
 
 
 
 onMounted(async () => {
+    setSlidesPorTamanho()
 
-   
     loadFilmesBemAvaliados()
-    
+
 })
 </script>
 
 <style scoped></style>
+
