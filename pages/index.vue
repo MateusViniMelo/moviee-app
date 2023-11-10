@@ -42,14 +42,15 @@
       }"
       :modules="[Navigation, FreeMode]"
       @resize="setSlidesPorTamanho()"
+      class=""
     >
       <swiper-slide
         v-for="filme in filmesBemAvaliados?.results"
         :key="filme.id"
-        @mouseover="console.log('testeee')"
+         class=""
       >
         <img
-          class="rounded-t-lg"
+          class="rounded-t-lg "
           :src="`${config.public.imageUrl}/w200${filme?.poster_path}`"
           :alt="`${filme?.title}`"
         />
@@ -102,6 +103,7 @@
       }"
       :modules="[Navigation, FreeMode]"
       @resize="setSlidesPorTamanho()"
+      
     >
       <swiper-slide v-for="filme in filmesEmCartaz?.results" :key="filme.id">
         <img
