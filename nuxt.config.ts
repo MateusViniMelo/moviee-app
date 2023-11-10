@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     public: {
       apiKey: process.env.NUXT_API_KEY,
       apiUrl: "https://api.themoviedb.org/3",
-      imageUrl: "https://image.tmdb.org/t/p/w200",
+      imageUrl: "https://image.tmdb.org/t/p",
     },
   },
   devtools: { enabled: true },
