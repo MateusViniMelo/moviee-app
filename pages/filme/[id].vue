@@ -77,29 +77,16 @@
 
 <script setup lang="ts">
 import type { Filme } from "~/types/filme";
-import type { GeneroFilme } from "~/types/generoFilme";
 
-const { getById } = useMovies();
+const { $http } = useNuxtApp();
+
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const filme = ref<Filme | undefined>();
-const { getGenres } = useGenreMovie();
 
-const generosFilmes = ref<GeneroFilme[] | undefined>();
-const loadGeneros = async () => {
-  if (filme.value !== undefined) {
-    generosFilmes.value = await getGenres(filme.value?.genre_ids);
-  }
-};
-
-onMounted(async () => {
-  if (typeof route.params.id == "string") {
-    filme.value = await getById(route.params.id).finally(async () => {
-      await loadGeneros();
-    });
-  }
-});
+const { data: filme } = await useAsyncData<Filme>("movie", () =>
+  $http.movie.getMovieById(route.params.id)
+);
 </script>
 
 <style scoped></style>

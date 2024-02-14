@@ -182,7 +182,7 @@ const isClient = process.client;
 const filmeStore = useFilmeStore();
 const tamanhoSliderStore = useTamanhoSliderStore();
 const config = useRuntimeConfig();
-const { getGenresMovies } = useGenreMovie();
+
 
 const {
   filmesBemAvaliados,
@@ -204,17 +204,19 @@ const {
 } = filmeStore;
 const { setSlidesPorTamanho, setSlidesPorTamanhoFilmePopular } =
   tamanhoSliderStore;
-
-onMounted(async () => {
-  setSlidesPorTamanho();
-  setSlidesPorTamanhoFilmePopular();
-  initFlowbite();
+await useAsyncData("movies", () =>
   Promise.all([
     loadFilmesBemAvaliados(),
     loadFilmesPopulares(),
     loadFilmesLancadosEmBreve(),
     loadFilmesEmCartaz(),
-  ]);
+  ])
+);
+
+onMounted(async () => {
+  setSlidesPorTamanho();
+  setSlidesPorTamanhoFilmePopular();
+  initFlowbite();
 });
 </script>
 
