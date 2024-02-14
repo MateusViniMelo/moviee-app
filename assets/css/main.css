@@ -4,9 +4,9 @@
 
 @layer utilities {
   .estrela-vazia {
-    @apply text-lg text-gray-300 dark:text-gray-500;
+    @apply text-xl text-gray-300 dark:text-gray-500;
   }
   .estrela-amarela {
-    @apply text-lg text-yellow-300;
+    @apply text-xl text-yellow-300;
   }
 }

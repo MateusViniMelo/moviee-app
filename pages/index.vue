@@ -26,11 +26,20 @@
           :alt="`${filme?.title}`"
         />
         <div
-          class="absolute bottom-0 flex flex-col items-start justify-end w-full p-10 space-y-5 text-lg text-white lg:p-20 h-2/3 degrade-preto"
-          style=""
+          class="absolute bottom-0 flex flex-col items-start justify-end w-full p-10 space-y-5 text-lg text-white lg:p-20 h-2/3 bg-gradient-to-b from-transparent to-gray-900"
         >
-          <p class="font-bold shadow lg:w-1/2 xl:text-6xl md:text-4xl">{{ filme?.title }}</p>
-          <p class="hidden text-sm text-left lg:text-base text-clip xl:w-1/2 md:block">{{ filme?.overview }}</p>
+          <p
+            class="font-bold shadow cursor-pointer lg:w-1/2 xl:text-6xl md:text-4xl hover:text-gray-200"
+            @click="goToFilme(filme)"
+          >
+            {{ filme?.title }}
+          </p>
+          <p
+            class="hidden text-sm text-left cursor-pointer lg:text-base text-clip xl:w-1/2 md:block hover:text-gray-200"
+            @click="goToFilme(filme)"
+          >
+            {{ filme?.overview }}
+          </p>
         </div>
       </swiper-slide>
     </swiper>
@@ -53,12 +62,12 @@
         }"
         :modules="[Navigation, FreeMode]"
         @resize="setSlidesPorTamanho()"
-        class=""
       >
         <swiper-slide
           v-for="filme in filmesBemAvaliados?.results"
           :key="filme.id"
-          class=""
+          class="cursor-pointer"
+          @click="goToFilme(filme)"
         >
           <img
             class="rounded-t-lg"
@@ -88,6 +97,39 @@
         <swiper-slide
           v-for="filme in filmesLancadosEmBreve?.results"
           :key="filme.id"
+          @click="goToFilme(filme)"
+        >
+          <img
+            class="rounded-t-lg cursor-pointer"
+            :src="`${config.public.imageUrl}/w200${filme?.poster_path}`"
+            :alt="`${filme?.title}`"
+          />
+        </swiper-slide>
+      </swiper>
+      <h1
+        class="mt-10 mb-3 text-2xl font-bold tracking-tight text-gray-900 lg:mt-20 dark:text-white"
+      >
+        Filmes Populares
+      </h1>
+
+      <swiper
+        :slidesPerView="slidesPorView"
+        :loop="true"
+        :freeMode="true"
+        :navigation="true"
+        :spaceBetween="20"
+        :pagination="{
+          clickable: true,
+        }"
+        :modules="[Navigation, FreeMode]"
+        @resize="setSlidesPorTamanho()"
+        class=""
+      >
+        <swiper-slide
+          v-for="filme in filmesPopulares?.results"
+          :key="filme.id"
+          class="cursor-pointer"
+          @click="goToFilme(filme)"
         >
           <img
             class="rounded-t-lg"
@@ -96,7 +138,6 @@
           />
         </swiper-slide>
       </swiper>
-
       <h1
         class="mt-20 mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
       >
@@ -117,9 +158,10 @@
       >
         <swiper-slide v-for="filme in filmesEmCartaz?.results" :key="filme.id">
           <img
-            class="rounded-t-lg"
+            class="rounded-t-lg cursor-pointer"
             :src="`${config.public.imageUrl}/w200${filme?.poster_path}`"
             :alt="`${filme?.title}`"
+            @click="goToFilme(filme)"
           />
         </swiper-slide>
       </swiper>
@@ -133,8 +175,9 @@ import { initFlowbite } from "flowbite";
 import "swiper/css";
 
 import "swiper/css/pagination";
-import { all } from "axios";
+import type { Filme } from "~/types/filme";
 
+const router = useRouter();
 const isClient = process.client;
 const filmeStore = useFilmeStore();
 const tamanhoSliderStore = useTamanhoSliderStore();
@@ -148,6 +191,10 @@ const {
   filmesEmCartaz,
 } = storeToRefs(filmeStore);
 const { slidesPorView, slidesPorViewPopular } = storeToRefs(tamanhoSliderStore);
+
+const goToFilme = (filme: Filme) => {
+  router.push(`/filme/${filme.id}`);
+};
 
 const {
   loadFilmesBemAvaliados,

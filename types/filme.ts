@@ -1,3 +1,5 @@
+import type { GeneroFilme } from "./generoFilme";
+
 export interface Filme {
   adult: boolean;
   backdrop_path: string;
@@ -13,4 +15,7 @@ export interface Filme {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  tagline?: string;
+  runtime?: number;
+  genres?: GeneroFilme[]
 }

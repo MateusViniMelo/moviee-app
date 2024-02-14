@@ -1,3 +1,4 @@
+import type { Filme } from "~/types/filme";
 import type { FilmeResponse } from "~/types/filmeResponse";
 
 export default function () {
@@ -47,5 +48,21 @@ export default function () {
       console.log(error);
     }
   };
-  return { getTopRatedMovies, getPopularMovies, getUpcomingMovies, getNowPlayingMovies };
+
+  const getById = async (id: number | string): Promise<Filme | undefined> => {
+    try {
+      const response = await $axios.get<Filme | undefined>(`/movie/${id}?language=pt-BR`);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return {
+    getTopRatedMovies,
+    getPopularMovies,
+    getUpcomingMovies,
+    getNowPlayingMovies,
+    getById,
+  };
 }
