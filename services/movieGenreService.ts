@@ -1,6 +1,7 @@
 import type { $Fetch } from "ofetch";
 
 import type { GeneroFilme } from "~/types/generoFilme";
+import type { GeneroFilmeResponse } from "~/types/generoFilmeResponse";
 
 export default class MovieGenreService {
   private fetch: $Fetch;
@@ -9,8 +10,8 @@ export default class MovieGenreService {
     this.fetch = fetch;
   }
 
-  async getGenresMovies(): Promise<GeneroFilme[]> {
-    const result = await this.fetch<GeneroFilme[]>(
+  async getGenresMovies(): Promise<GeneroFilmeResponse> {
+    const result = await this.fetch<GeneroFilmeResponse>(
       `/genre/movie/list?language=pt-BR`,
       { method: "GET" }
     );
@@ -30,12 +31,12 @@ export default class MovieGenreService {
   }
 
   async getGenres(generosIds: number[]): Promise<GeneroFilme[]> {
-    const generosFilmes: GeneroFilme[] = await this.getGenresMovies();
+    const generosFilmes: GeneroFilmeResponse= await this.getGenresMovies();
 
     //if (generosFilmes !== undefined) {
     let generosFiltrados: GeneroFilme[] = [];
 
-    generosFiltrados = await this.getGenresByIds(generosFilmes, generosIds);
+    generosFiltrados = await this.getGenresByIds(generosFilmes.genres, generosIds);
 
     return generosFiltrados;
     //}
