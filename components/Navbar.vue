@@ -143,11 +143,11 @@
           class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900 dark:border-gray-700"
         >
           <li>
-            <a
-              href="#"
+            <NuxtLink
+              :to="'/'" 
               class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-yellow-400 md:p-0 md:dark:text-yellow-300"
               aria-current="page"
-              >Início</a
+              >Início</NuxtLink
             >
           </li>
           <li>
