@@ -12,6 +12,7 @@ export default defineNuxtPlugin(() => {
         Authorization: `Bearer ${config.public.apiKey}`,
         Accept: "application/json",
       };
+      
       options.headers = Object.assign(headers, options.headers);
     },
   });

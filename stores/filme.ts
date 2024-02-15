@@ -4,32 +4,36 @@ import type { FilmeResponse } from "~/types/filmeResponse";
 import type { GeneroFilme } from "~/types/generoFilme";
 
 export const useFilmeStore = defineStore("filme", () => {
+  const { $http } = useNuxtApp();
 
-  const {$http} = useNuxtApp()
   
- 
+  const paginasTotais = ref(1);
   const filmesBemAvaliados = ref<FilmeResponse>();
   const filmesPopulares = ref<FilmeResponse | null>();
   const filmesLancadosEmBreve = ref<FilmeResponse | null>();
   const filmesEmCartaz = ref<FilmeResponse | null>();
-  const generosFilmes = ref<GeneroFilme[] | null>();
-
+  const filmesPorGenero = ref<FilmeResponse>();
 
   const loadFilmesBemAvaliados = async () => {
-    
     filmesBemAvaliados.value = await $http.movie.getTopRatedMovies();
   };
 
   const loadFilmesPopulares = async () => {
     filmesPopulares.value = await $http.movie.getPopularMovies();
   };
-  const loadGenerosFilmes = async () => {
-    generosFilmes.value = await $http.movieGenre.getGenresMovies();
-  };
+
   const loadFilmesLancadosEmBreve = async () => {
     filmesLancadosEmBreve.value = await $http.movie.getUpcomingMovies();
   };
-
+  const loadFilmesbyGenero = async (id: any, paginaAtual: number | string) => {
+    filmesPorGenero.value = await $http.movie
+      .getMovieByGenre(id, paginaAtual)
+      .finally(() => {
+        if (filmesPorGenero.value?.total_pages !== undefined) {
+          paginasTotais.value = filmesPorGenero.value?.total_pages;
+        }
+      });
+  };
   const loadFilmesEmCartaz = async () => {
     filmesEmCartaz.value = await $http.movie.getNowPlayingMovies();
   };
@@ -40,8 +44,11 @@ export const useFilmeStore = defineStore("filme", () => {
     loadFilmesLancadosEmBreve,
     loadFilmesEmCartaz,
     loadFilmesPopulares,
-    loadGenerosFilmes,
+    loadFilmesbyGenero,
     filmesLancadosEmBreve,
-    filmesEmCartaz
+    filmesEmCartaz,
+    filmesPorGenero,
+    
+    paginasTotais
   };
 });
