@@ -34,9 +34,9 @@ const { start, finish } = useLoadingIndicator();
 const route = useRoute();
 const router = useRouter();
 const config = useRuntimeConfig();
-const paginaAtual = ref(1)
+
 const filmeStore = useFilmeStore();
-const { filmesPorGenero, paginasTotais } = storeToRefs(filmeStore);
+const { filmesPorGenero, paginasTotais, paginaAtual } = storeToRefs(filmeStore);
 
 const { loadFilmesbyGenero } = filmeStore;
 const carregarFilmes = async () => {

@@ -144,9 +144,10 @@
         >
           <li>
             <NuxtLink
-              :to="'/'" 
-              class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-yellow-400 md:p-0 md:dark:text-yellow-300"
-              aria-current="page"
+              :to="'/'"
+              :exactActiveClass="'bg-yellow-300 md:text-yellow-400 md:p-0 md:dark:text-yellow-300 md:bg-transparent md:p-0'"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-400 md:p-0 md:dark:hover:text-yellow-300 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+             
               >Início</NuxtLink
             >
           </li>
@@ -183,7 +184,7 @@
                 aria-labelledby="dropdownLargeButton"
               >
                 <li v-for="genero in generos?.genres" :key="genero.id">
-                  <NuxtLink
+                  <NuxtLink @click="resetarPaginaAtual()"
                     :to="`/filmes-genre/${genero.id}`"
                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >{{ genero.name }}</NuxtLink
@@ -224,7 +225,8 @@ const router = useRouter();
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const { $http } = useNuxtApp();
-
+const filmeStore = useFilmeStore();
+const { paginaAtual } = storeToRefs(filmeStore);
 const goToMoviesByGenre = (genre: GeneroFilme) => {
   router.push(`/filmes-genre/${genre.id}`);
 };
@@ -232,6 +234,10 @@ const { data: generos } = await useAsyncData<GeneroFilmeResponse>(
   "generosFilmes",
   () => $http.movieGenre.getGenresMovies()
 );
+
+const resetarPaginaAtual = () => {
+  paginaAtual.value = 1;
+};
 onMounted(() => {
   initFlowbite();
 });

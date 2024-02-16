@@ -8,6 +8,7 @@ export const useFilmeStore = defineStore("filme", () => {
 
   
   const paginasTotais = ref(1);
+  const paginaAtual = ref(1);
   const filmesBemAvaliados = ref<FilmeResponse>();
   const filmesPopulares = ref<FilmeResponse | null>();
   const filmesLancadosEmBreve = ref<FilmeResponse | null>();
@@ -48,7 +49,7 @@ export const useFilmeStore = defineStore("filme", () => {
     filmesLancadosEmBreve,
     filmesEmCartaz,
     filmesPorGenero,
-    
+    paginaAtual,
     paginasTotais
   };
 });
