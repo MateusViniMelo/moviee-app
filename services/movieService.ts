@@ -1,5 +1,7 @@
 import type { $Fetch } from "ofetch";
-import type { Filme } from "~/types/filme";
+import type { CreditoFilme } from "~/types/creditoFilme";
+
+import type { FilmeInformacao } from "~/types/filmeInformacao";
 import type { FilmeResponse } from "~/types/filmeResponse";
 
 export default class MovieService {
@@ -50,18 +52,31 @@ export default class MovieService {
 
     return result;
   }
-  async getMovieByGenre(genreId: any, page: string | number = 1 ) {
+  async getMovieByGenre(genreId: any, page: string | number = 1) {
     const result = await this.fetch<FilmeResponse>(
       `/discover/movie?language=pt-BR&with_genres=${genreId}&page=${page}`,
       { method: "GET" }
     );
 
-    return result
+    return result;
   }
   async getMovieById(id: any) {
-    const result = await this.fetch<Filme>(`/movie/${id}?language=pt-BR`, {
-      method: "GET",
-    });
+    const result = await this.fetch<FilmeInformacao>(
+      `/movie/${id}?language=pt-BR`,
+      {
+        method: "GET",
+      }
+    );
+
+    return result;
+  }
+  async getMovieDetailById(id: any) {
+    const result = await this.fetch<CreditoFilme>(
+      `/movie/${id}/credits?language=pt-BR`,
+      {
+        method: "GET",
+      }
+    );
 
     return result;
   }

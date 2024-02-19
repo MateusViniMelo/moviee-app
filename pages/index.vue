@@ -48,9 +48,8 @@
       <h1
         class="mt-10 mb-3 text-2xl font-bold tracking-tight text-gray-900 lg:mt-20 dark:text-white"
       >
-        Filmes bem avaliados
+        Filmes Populares
       </h1>
-
       <swiper
         :slidesPerView="slidesPorView"
         :loop="true"
@@ -62,9 +61,10 @@
         }"
         :modules="[Navigation, FreeMode]"
         @resize="setSlidesPorTamanho()"
+        class=""
       >
         <swiper-slide
-          v-for="filme in filmesBemAvaliados?.results"
+          v-for="filme in filmesPopulares?.results"
           :key="filme.id"
           class="cursor-pointer"
           @click="goToFilme(filme)"
@@ -76,6 +76,7 @@
           />
         </swiper-slide>
       </swiper>
+      
       <h1
         class="mt-20 mb-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
       >
@@ -109,7 +110,7 @@
       <h1
         class="mt-10 mb-3 text-2xl font-bold tracking-tight text-gray-900 lg:mt-20 dark:text-white"
       >
-        Filmes Populares
+        Filmes Bem Avaliados
       </h1>
 
       <swiper
@@ -123,10 +124,9 @@
         }"
         :modules="[Navigation, FreeMode]"
         @resize="setSlidesPorTamanho()"
-        class=""
       >
         <swiper-slide
-          v-for="filme in filmesPopulares?.results"
+          v-for="filme in filmesBemAvaliados?.results"
           :key="filme.id"
           class="cursor-pointer"
           @click="goToFilme(filme)"
