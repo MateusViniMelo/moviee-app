@@ -3,6 +3,8 @@ import type { CreditoFilme } from "~/types/creditoFilme";
 
 import type { FilmeInformacao } from "~/types/filmeInformacao";
 import type { FilmeResponse } from "~/types/filmeResponse";
+import type { movieImagens } from "~/types/movieImagens";
+
 
 export default class MovieService {
   private fetch: $Fetch;
@@ -73,6 +75,17 @@ export default class MovieService {
   async getMovieDetailById(id: any) {
     const result = await this.fetch<CreditoFilme>(
       `/movie/${id}/credits?language=pt-BR`,
+      {
+        method: "GET",
+      }
+    );
+
+    return result;
+  }
+
+  async getMovieImagesById(id: any) {
+    const result = await this.fetch<movieImagens>(
+      `/movie/${id}/images?language=en-US,null`,
       {
         method: "GET",
       }

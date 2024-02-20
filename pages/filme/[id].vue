@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative h-full bg-center bg-no-repeat bg-cover"
+    class="relative h-full bg-bottom bg-no-repeat bg-cover"
     :style="`background-image: url( '${config.public.imageUrl}/original${filmeInformacoes?.filme?.backdrop_path}');`"
   >
     <div class="relative z-10">
@@ -73,7 +73,9 @@
               </p>
             </div>
             <div>
-              <h5 class="mt-3 mb-5 text-2xl font-bold text-gray-900 dark:text-white">
+              <h5
+                class="mt-3 mb-5 text-2xl font-bold text-gray-900 dark:text-white"
+              >
                 Elenco
               </h5>
               <div>
@@ -114,12 +116,47 @@
                 </swiper>
               </div>
             </div>
+            <div>
+              <h5
+                class="mb-5 text-2xl font-bold text-gray-900 mb-25 mt-28 dark:text-white"
+              >
+                Imagens
+              </h5>
+
+              <swiper
+                :slidesPerView="1"
+                :spaceBetween="30"
+                :loop="true"
+                :autoplay="{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                }"
+                :pagination="{
+                  dynamicBullets: true,
+                }"
+                :navigation="true"
+                :modules="[Pagination, Navigation, Autoplay]"
+                class="xl:w-1/2"
+              >
+                <swiper-slide
+                  v-for="(imagem, index) in filmeInformacoes?.movieImagens
+                    ?.backdrops"
+                  :key="index"
+                >
+                  <img
+                    class="rounded-lg"
+                    :src="`${config.public.imageUrl}/original${imagem?.file_path}`"
+                    alt="image description"
+                  />
+                </swiper-slide>
+              </swiper>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-t from-blue-50 from-40% to-transparent dark:from-gray-900"
+      class="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-t from-blue-50 from-60% to-transparent dark:from-gray-900"
     ></div>
   </div>
 </template>
@@ -141,12 +178,13 @@ const router = useRouter();
 const config = useRuntimeConfig();
 
 const { data: filmeInformacoes } = await useAsyncData("movie", async () => {
-  const [filme, credito] = await Promise.all([
+  const [filme, credito, movieImagens] = await Promise.all([
     $http.movie.getMovieById(route.params.id),
     $http.movie.getMovieDetailById(route.params.id),
+    $http.movie.getMovieImagesById(route.params.id),
   ]);
 
-  return { filme, cast: credito.cast };
+  return { filme, cast: credito.cast, movieImagens };
 });
 
 onMounted(() => {
