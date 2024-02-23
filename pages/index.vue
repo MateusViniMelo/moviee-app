@@ -29,7 +29,7 @@
           class="absolute bottom-0 flex flex-col items-start justify-end w-full p-10 space-y-5 text-lg text-white lg:p-20 h-2/3 bg-gradient-to-b from-transparent to-gray-900"
         >
           <p
-            class="font-bold shadow cursor-pointer lg:w-1/2 xl:text-6xl md:text-4xl hover:text-gray-200"
+            class="font-bold cursor-pointer lg:w-1/2 xl:text-6xl md:text-4xl hover:text-gray-200"
             @click="goToFilme(filme)"
           >
             {{ filme?.title }}

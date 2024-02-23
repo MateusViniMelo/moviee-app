@@ -93,4 +93,16 @@ export default class MovieService {
 
     return result;
   }
+  async getMoviesRecommendations(id: any) {
+
+     const result = await this.fetch<FilmeResponse>(
+      `/movie/${id}/recommendations?language=pt-BR`,
+      {
+        method: "GET",
+      }
+    );
+      
+    return result;
+  }
+
 }
