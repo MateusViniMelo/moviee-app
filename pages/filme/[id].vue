@@ -3,6 +3,9 @@
     class="relative bg-fixed bg-top bg-no-repeat bg-cover"
     :style="`background-image: url( '${config.public.imageUrl}/original${filmeInformacoes?.filme?.backdrop_path}');`"
   >
+  <div
+      class="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-t from-blue-50 from-80% to-transparent dark:from-gray-900"
+    ></div>
     <div class="relative z-10">
       <div class="container h-full px-4 mx-auto">
         <div class="text-lg text-gray-900 dark:text-white"></div>
@@ -44,14 +47,13 @@
                 {{ filmeInformacoes?.filme?.runtime }} minutos
               </p>
               <p class="text-gray-900 md:text-lg dark:text-white">
-                Lançamento: {{ filmeInformacoes?.filme?.release_date }}
+                Lançamento: {{ useDateFormat(filmeInformacoes?.filme?.release_date, 'DD/MM/YYYY').value }}
               </p>
               <div
                 class="flex flex-wrap items-end justify-start mt-4 space-x-1 space-y-2"
               >
                 <NuxtLink
                   :to="`/filmes-genre/${genero.id}`"
-                  
                   v-for="genero in filmeInformacoes?.filme?.genres"
                   :key="genero.id"
                   class="font-medium me-2 px-2.5 py-0.5 rounded bg-yellow-300 text-dark focus:outline-none hover:bg-yellow-400 focus:ring-yellow-300 dark:focus:ring-yellow-900"
@@ -118,7 +120,10 @@
                 </swiper>
               </div>
             </div>
-            <div class="mt-32">
+            <div
+              class="mt-32"
+              v-if="filmeInformacoes?.movieImagens?.backdrops.length !== 0"
+            >
               <h5
                 class="mt-6 mb-5 text-2xl font-bold text-gray-900 uppercase dark:text-white"
               >
@@ -156,12 +161,29 @@
                 </swiper>
               </div>
             </div>
-          </div>
+            <div class="mt-32" v-if="filmeInformacoes?.analises?.results.length !== 0">
+              <h5
+                class="mt-6 mb-5 text-2xl font-bold text-gray-900 uppercase dark:text-white"
+              >
+                <span class="pr-3 border-b-4 border-yellow-300 pb-0.5"
+                  >Análises ({{ filmeInformacoes?.analises?.results.length }})</span
+                >
+              </h5>
 
-          
+              <MovieReview
+                v-for="analise in filmeInformacoes?.analises?.results"
+                :key="analise.id"
+                :analise="analise"
+                
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="">
+        <div
+          class=""
+          v-if="filmeInformacoes?.filmesRecomendacoes?.results.length !== 0"
+        >
           <h1
             class="mt-20 mb-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
           >
@@ -197,14 +219,13 @@
         </div>
       </div>
     </div>
-    <div
-      class="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-t from-blue-50 from-75% to-transparent dark:from-gray-900"
-    ></div>
+    
   </div>
 </template>
 
 <script setup lang="ts">
 import { FreeMode, Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useDateFormat, formatDate } from "@vueuse/core";
 import { initFlowbite } from "flowbite";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -216,18 +237,49 @@ const route = useRoute();
 const config = useRuntimeConfig();
 
 const { data: filmeInformacoes } = await useAsyncData("movie", async () => {
-  const [filme, credito, movieImagens, filmesRecomendacoes] = await Promise.all(
-    [
+  const [filme, credito, movieImagens, filmesRecomendacoes, analises] =
+    await Promise.all([
       $http.movie.getMovieById(route.params.id),
       $http.movie.getMovieDetailById(route.params.id),
       $http.movie.getMovieImagesById(route.params.id),
       $http.movie.getMoviesRecommendations(route.params.id),
-    ]
-  );
+      $http.movie.getMovieReviews(route.params.id),
+    ]);
 
-  return { filme, cast: credito.cast, movieImagens, filmesRecomendacoes };
+  return {
+    filme,
+    cast: credito.cast,
+    movieImagens,
+    filmesRecomendacoes,
+    analises,
+  };
 });
+const gerarCorAleatoria = (): string => {
+  const cores = [
+    "red",
+    "orange",
+    "amber",
+    "yellow",
+    "lime",
+    "green",
+    "emerald",
+    "teal",
+    "cyan",
+    "sky",
+    "blue",
+    "indigo",
+    "violet",
+    "purple",
+    "rose",
+  ];
 
+  const indiceAleatorio = Math.floor(Math.random() * cores.length);
+
+  const corAleatoria = cores[indiceAleatorio];
+
+  const corEscolhida = `bg-${corAleatoria}-500`;
+  return corAleatoria;
+};
 onMounted(() => {
   setSlidesElencoPorTamanho();
   setSlidesPorTamanho();

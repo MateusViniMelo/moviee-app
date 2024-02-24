@@ -4,6 +4,7 @@ import type { CreditoFilme } from "~/types/creditoFilme";
 import type { FilmeInformacao } from "~/types/filmeInformacao";
 import type { FilmeResponse } from "~/types/filmeResponse";
 import type { movieImagens } from "~/types/movieImagens";
+import type { AnaliseFilmeResponse } from "../types/analiseFilmeResponse";
 
 
 export default class MovieService {
@@ -104,5 +105,16 @@ export default class MovieService {
       
     return result;
   }
+
+  async getMovieReviews(id: any) {
+  
+   const result = await this.fetch<AnaliseFilmeResponse>(
+     `/movie/${id}/reviews?language=pt-BR`,
+     {
+       method: "GET",
+     }
+   );
+
+   return result;}
 
 }
