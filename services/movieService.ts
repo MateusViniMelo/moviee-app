@@ -6,7 +6,6 @@ import type { FilmeResponse } from "~/types/filmeResponse";
 import type { movieImagens } from "~/types/movieImagens";
 import type { AnaliseFilmeResponse } from "../types/analiseFilmeResponse";
 
-
 export default class MovieService {
   private fetch: $Fetch;
 
@@ -95,26 +94,34 @@ export default class MovieService {
     return result;
   }
   async getMoviesRecommendations(id: any) {
-
-     const result = await this.fetch<FilmeResponse>(
+    const result = await this.fetch<FilmeResponse>(
       `/movie/${id}/recommendations?language=pt-BR`,
       {
         method: "GET",
       }
     );
-      
+
     return result;
   }
 
   async getMovieReviews(id: any) {
-  
-   const result = await this.fetch<AnaliseFilmeResponse>(
-     `/movie/${id}/reviews?language=pt-BR`,
-     {
-       method: "GET",
-     }
-   );
+    const result = await this.fetch<AnaliseFilmeResponse>(
+      `/movie/${id}/reviews?language=pt-BR`,
+      {
+        method: "GET",
+      }
+    );
 
-   return result;}
+    return result;
+  }
+  async searchMovies(pesquisa: string) {
+    const result = await this.fetch<FilmeResponse>(
+      `/search/movie?query=${pesquisa}&include_adult=false&language=pt-BR`,
+      {
+        method: "GET",
+      }
+    );
 
+    return result;
+  }
 }
