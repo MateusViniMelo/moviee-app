@@ -7,9 +7,9 @@
                 <slot></slot>
                 
             </div>
-            <Footer/>
+            
         </div>
-        
+        <Footer/>
     </div>
 </template>
 

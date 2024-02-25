@@ -114,9 +114,9 @@ export default class MovieService {
 
     return result;
   }
-  async searchMovies(pesquisa: string) {
+  async searchMovies(pesquisa: string, page: number) {
     const result = await this.fetch<FilmeResponse>(
-      `/search/movie?query=${pesquisa}&include_adult=false&language=pt-BR`,
+      `/search/movie?query=${pesquisa}&include_adult=false&page=${page}&language=pt-BR`,
       {
         method: "GET",
       }

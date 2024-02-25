@@ -1,6 +1,6 @@
 <template>
   <div>
-    <footer class="bg-white rounded-lg shadow dark:bg-gray-800">
+    <footer class="bg-white shadow dark:bg-gray-800">
       <div
         class="w-full max-w-screen-xl p-4 mx-auto md:flex md:items-center md:justify-between"
       >

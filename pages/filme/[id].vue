@@ -3,7 +3,7 @@
     class="relative bg-fixed bg-top bg-no-repeat bg-cover"
     :style="`background-image: url( '${config.public.imageUrl}/original${filmeInformacoes?.filme?.backdrop_path}');`"
   >
-  <div
+    <div
       class="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-t from-blue-50 from-80% to-transparent dark:from-gray-900"
     ></div>
     <div class="relative z-10">
@@ -47,16 +47,22 @@
                 {{ filmeInformacoes?.filme?.runtime }} minutos
               </p>
               <p class="text-gray-900 md:text-lg dark:text-white">
-                Lançamento: {{ useDateFormat(filmeInformacoes?.filme?.release_date, 'DD/MM/YYYY').value }}
+                Lançamento:
+                {{
+                  useDateFormat(
+                    filmeInformacoes?.filme?.release_date,
+                    "DD/MM/YYYY"
+                  ).value
+                }}
               </p>
               <div
-                class="flex flex-wrap items-end justify-start mt-4 space-x-1 space-y-2"
+                class="flex flex-wrap items-end justify-start mt-4 space-x-2 space-y-2"
               >
                 <NuxtLink
                   :to="`/filmes-genre/${genero.id}`"
                   v-for="genero in filmeInformacoes?.filme?.genres"
                   :key="genero.id"
-                  class="font-medium me-2 px-2.5 py-0.5 rounded bg-yellow-300 text-dark focus:outline-none hover:bg-yellow-400 focus:ring-yellow-300 dark:focus:ring-yellow-900"
+                  class="font-medium px-2.5 py-0.5 rounded bg-yellow-300 text-dark focus:outline-none hover:bg-yellow-400 focus:ring-yellow-300 dark:focus:ring-yellow-900"
                 >
                   {{ genero.name }}
                 </NuxtLink>
@@ -69,7 +75,7 @@
                 {{ filmeInformacoes?.filme?.overview }}
               </p>
             </div>
-            <div>
+            <div v-if="filmeInformacoes?.cast.length !== 0">
               <h5
                 class="mt-6 mb-5 text-2xl font-bold text-gray-900 uppercase dark:text-white"
               >
@@ -94,9 +100,7 @@
                     :key="pessoaElenco.cast_id"
                     class="cursor-pointer"
                   >
-                    <figure
-                      class="relative flex justify-center max-w-sm filter"
-                    >
+                    <div class="relative flex justify-center max-w-sm filter">
                       <img
                         v-if="pessoaElenco.profile_path !== null"
                         class="rounded-lg"
@@ -108,14 +112,14 @@
                         class="h-auto max-w-full rounded-lg"
                         src="~/assets/img/color-gray.png"
                       />
-                      <figcaption
-                        class="absolute text-lg font-bold text-white md:text-sm bottom-6 xl:text-lg outline-black"
+                      <div
+                        class="absolute inset-x-0 bottom-0 inline-flex items-center justify-center h-12 text-white rounded-lg bg-gradient-to-t from-black"
                       >
                         <p class="">
                           {{ pessoaElenco.name }}
                         </p>
-                      </figcaption>
-                    </figure>
+                      </div>
+                    </div>
                   </swiper-slide>
                 </swiper>
               </div>
@@ -161,12 +165,17 @@
                 </swiper>
               </div>
             </div>
-            <div class="mt-32" v-if="filmeInformacoes?.analises?.results.length !== 0">
+            <div
+              class="mt-32"
+              v-if="filmeInformacoes?.analises?.results.length !== 0"
+            >
               <h5
                 class="mt-6 mb-5 text-2xl font-bold text-gray-900 uppercase dark:text-white"
               >
                 <span class="pr-3 border-b-4 border-yellow-300 pb-0.5"
-                  >Análises ({{ filmeInformacoes?.analises?.results.length }})</span
+                  >Análises ({{
+                    filmeInformacoes?.analises?.results.length
+                  }})</span
                 >
               </h5>
 
@@ -174,7 +183,6 @@
                 v-for="analise in filmeInformacoes?.analises?.results"
                 :key="analise.id"
                 :analise="analise"
-                
               />
             </div>
           </div>
@@ -219,7 +227,6 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 

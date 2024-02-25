@@ -6,15 +6,15 @@ import type { GeneroFilme } from "~/types/generoFilme";
 export const useFilmeStore = defineStore("filme", () => {
   const { $http } = useNuxtApp();
 
-  
-  const paginasTotais = ref(1);
-  const paginaAtual = ref(1);
+  const paginasTotais = ref<number>(1);
+  const paginaAtual = ref<number>(1);
   const filmesBemAvaliados = ref<FilmeResponse>();
   const filmesPopulares = ref<FilmeResponse | null>();
   const filmesLancadosEmBreve = ref<FilmeResponse | null>();
   const filmesEmCartaz = ref<FilmeResponse | null>();
   const filmesPorGenero = ref<FilmeResponse>();
-
+  const filmesPesquisados = ref<FilmeResponse>();
+  const exibirFilmesIniciais = ref<boolean>(true);
   const loadFilmesBemAvaliados = async () => {
     filmesBemAvaliados.value = await $http.movie.getTopRatedMovies();
   };
@@ -38,6 +38,18 @@ export const useFilmeStore = defineStore("filme", () => {
   const loadFilmesEmCartaz = async () => {
     filmesEmCartaz.value = await $http.movie.getNowPlayingMovies();
   };
+
+  const loadFilmesPesquisados = async (pesquisa: string) => {
+    //paginasTotais.value = 1;
+
+    filmesPesquisados.value = await $http.movie
+      .searchMovies(pesquisa, paginaAtual.value)
+      .finally(() => {
+        if (filmesPesquisados.value?.total_pages !== undefined) {
+          paginasTotais.value = filmesPesquisados.value?.total_pages;
+        }
+      });
+  };
   return {
     filmesBemAvaliados,
     filmesPopulares,
@@ -50,6 +62,9 @@ export const useFilmeStore = defineStore("filme", () => {
     filmesEmCartaz,
     filmesPorGenero,
     paginaAtual,
-    paginasTotais
+    paginasTotais,
+    loadFilmesPesquisados,
+    filmesPesquisados,
+    exibirFilmesIniciais,
   };
 });

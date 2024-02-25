@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="analise?.content !== undefined"
-    class="w-full p-6 mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    class="w-full p-3 mb-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
     <div class="flex items-center mb-3 space-x-3">
       <div
@@ -16,7 +16,9 @@
         {{ analise?.author }}
       </h5>
     </div>
-    <p class="mb-6 text-sm font-normal text-gray-700 dark:text-gray-400 ">Publicado em: {{  useDateFormat(analise?.created_at, 'DD/MM/YYYY').value}}</p>
+    <p class="mb-6 text-sm font-normal text-gray-700 dark:text-gray-400">
+      Publicado em: {{ useDateFormat(analise?.created_at, "DD/MM/YYYY").value }}
+    </p>
     <p
       class="mb-3 font-normal text-gray-700 dark:text-gray-400"
       v-if="analiseExibicao === false && analise?.content.length > 500"
