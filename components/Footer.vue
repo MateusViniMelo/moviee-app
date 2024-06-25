@@ -1,21 +1,21 @@
 <template>
-  <footer class="bg-gray-900 border-t border-gray-700 ">
+  <footer class="bg-gray-100 border-t border-gray-700 dark:bg-gray-900 ">
     <div class="w-full max-w-screen-xl p-4 py-6 mx-auto lg:py-8">
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0">
           <p class="flex items-center">
-            <a href="https://meu-portifolio-nuxt.vercel.app/" target="_blank"
-              class="self-center text-2xl font-semibold text-white whitespace-nowrap hover:text-gray-200"
-              >Mateus<span class="text-violet-600">;</span></a
+            <a href="https://mateus-melo-dev.vercel.app/" target="_blank"
+              class="self-center text-2xl font-semibold text-gray-900 hover:text-gray-700 dark:text-white whitespace-nowrap dark:hover:text-gray-200"
+              >Mateus<span class="text-violet-800 dark:text-violet-600">;</span></a
             >
           </p>
         </div>
         <div class="grid grid-cols-2 gap-8 space-x-4 sm:gap-12">
           <div>
-            <h2 class="mb-6 text-sm font-semibold text-white uppercase">
+            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
               Tecnologias
             </h2>
-            <ul class="font-medium text-gray-400">
+            <ul class="font-medium text-gray-500 dark:text-gray-400">
               <li class="mb-4">
                 <a
                   href="https://nuxt.com/"
@@ -35,7 +35,7 @@
             <h2 class="mb-6 text-sm font-semibold text-white uppercase">
               Me siga
             </h2>
-            <ul class="font-medium text-gray-400">
+            <ul class="font-medium text-gray-500 dark:text-gray-400">
               <li class="mb-4">
                 <a
                   href="https://github.com/MateusViniMelo"
@@ -58,7 +58,7 @@
       </div>
       <hr class="my-6 border-gray-700 sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        <span class="text-sm text-gray-400 sm:text-center"
+        <span class="text-sm text-gray-500 dark:text-gray-400 sm:text-center"
           >© 2024 - {{ new Date().getFullYear() }}
           <span class="hover:underline">Mateus</span>. All Rights
           Reserved.</span
