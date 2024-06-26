@@ -135,7 +135,7 @@
                   >Imagens</span
                 >
               </h5>
-              <div class="flex justify-end">
+              <div class="">
                 <swiper
                   :slidesPerView="1"
                   :spaceBetween="30"
